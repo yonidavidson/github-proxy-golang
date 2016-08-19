@@ -33,3 +33,20 @@ func TestGetHelloHandler(t *testing.T) {
 	}
 
 }
+
+func TestGetDataHandler(t *testing.T) {
+	req, err := http.NewRequest("GET", "/api/gh/", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	rr := httptest.NewRecorder()
+	ctx := web.C{make(map[string]string), make(map[interface{}]interface{})}
+
+	handler := GetData(&ctx, web.HandlerFunc(hello))
+	handler.ServeHTTP(rr, req)
+
+	if _, ok := ctx.Env["data"]; !ok {
+		t.Errorf("No data was fetched")
+	}
+}
