@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"github.com/zenazn/goji/web"
 	"net/http"
 	"net/http/httptest"
@@ -36,17 +35,4 @@ func TestGetHelloHandler(t *testing.T) {
 		t.Errorf("handler returned wrong status code: got %v want %v",
 			status, http.StatusOK)
 	}
-
-	var data Repos
-	expected := "[item1, item2 ....]"
-	json.Unmarshal([]byte(rr.Body.String()), &data)
-	if len(data) < 1 {
-		t.Errorf("handler returned unexpected body: got %v want %v",
-			rr.Body.String(), expected)
-	}
-	expected = "yonidavidson.github.io"
-	// if !contains(data, expected) {
-	// 	t.Errorf("handler returned unexpected body: got %v did not contain '[%v]'",
-	// 		rr.Body.String(), expected)
-	// }
 }

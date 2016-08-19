@@ -18,5 +18,12 @@ func TestMapping(t *testing.T) {
 	var r Repos
 	f, _ := getDataFromLocal()
 	json.Unmarshal(f, &r)
-	r._map("name", "stargazers_count")
+	m := r._map("name", "stargazers_count")
+	for _, o := range m {
+		_, ok1 := o["name"]
+		_, ok2 := o["stargazers_count"]
+		if !(ok1 && ok2) {
+			t.Errorf("mapping error: %v\n", o)
+		}
+	}
 }
