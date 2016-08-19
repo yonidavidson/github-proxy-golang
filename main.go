@@ -9,7 +9,7 @@ import (
 )
 
 func UserHandler(c web.C, w http.ResponseWriter, r *http.Request) {
-	repos, err := GetRepos()
+	repos, err := GetRepos(c.URLParams["username"])
 	if err != nil {
 		fmt.Fprintf(w, "Failed to get data:", 500)
 	} else {

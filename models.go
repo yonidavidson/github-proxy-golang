@@ -22,14 +22,13 @@ func (a Repos) _map(tokens ...string) Repos {
 	return b
 }
 
-func getBody() ([]byte, error) {
+func getBody(name string) ([]byte, error) {
 	tr := &http.Transport{
 		TLSClientConfig:    &tls.Config{RootCAs: nil},
 		DisableCompression: false,
 	}
 	client := &http.Client{Transport: tr}
-
-	response, err := client.Get("https://api.github.com/users/yonidavidson/repos")
+	response, err := client.Get("https://api.github.com/users/" + name + "/repos")
 	if err != nil {
 		return nil, err
 	}
@@ -41,9 +40,9 @@ func getBody() ([]byte, error) {
 	return body, nil
 }
 
-func GetRepos() (Repos, error) {
+func GetRepos(name string) (Repos, error) {
 	var r Repos
-	body, err := getBody()
+	body, err := getBody(name)
 	if err != nil {
 		log.Println(err)
 		return nil, err
