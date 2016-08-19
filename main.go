@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/zenazn/goji"
 	"github.com/zenazn/goji/web"
@@ -15,7 +16,8 @@ func UserHandler(c web.C, w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Fprintf(w, "Failed to get data:", 500)
 	} else {
-		fmt.Fprintf(w, "%v", repos)
+		json, _ := json.Marshal(repos)
+		fmt.Fprintf(w, "%v", string(json))
 	}
 }
 
