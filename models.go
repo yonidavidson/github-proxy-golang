@@ -22,7 +22,15 @@ func (a Repos) _map(tokens ...string) Repos {
 	return b
 }
 
+func getDataFromLocal() ([]byte, error) {
+	file, e := ioutil.ReadFile("./body_test.json")
+	return file, e
+}
+
 func getBody(name string) ([]byte, error) {
+	if MODE_DRY {
+		return getDataFromLocal()
+	}
 	tr := &http.Transport{
 		TLSClientConfig:    &tls.Config{RootCAs: nil},
 		DisableCompression: false,
@@ -40,7 +48,7 @@ func getBody(name string) ([]byte, error) {
 	return body, nil
 }
 
-func GetRepos(name string) (Repos, error) {
+func getRepos(name string) (Repos, error) {
 	var r Repos
 	body, err := getBody(name)
 	if err != nil {

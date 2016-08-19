@@ -18,6 +18,7 @@ func contains(s []string, e string) bool {
 }
 
 func TestGetHelloHandler(t *testing.T) {
+	MODE_DRY = true
 	req, err := http.NewRequest("GET", "/api/gh/", nil)
 	if err != nil {
 		t.Fatal(err)
