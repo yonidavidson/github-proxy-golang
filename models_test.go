@@ -26,8 +26,19 @@ func getDataMap(t *testing.T) Repos {
 }
 
 func TestUnmarsh(t *testing.T) {
-	fmt.Printf("%+v\n", getDataMap(t))
+	getDataMap(t)
 }
+
+func TestMapping(t *testing.T) {
+	m := getDataMap(t)
+	f := m._map("name", "stargazers_count")
+	fmt.Printf("%v", f)
+}
+
+// func TestNestedMapping(t *testing.T) {
+// 	m := getDataMap(t)
+// 	f = m.map("name", "stargazers_count")
+// }
 
 // func TestRepoMap(t *testing.T) {
 // 	f := getData(t)
