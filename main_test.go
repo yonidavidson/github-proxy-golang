@@ -44,8 +44,8 @@ func TestGetHelloHandler(t *testing.T) {
 			rr.Body.String(), expected)
 	}
 	expected = "yonidavidson.github.io"
-	if !contains(data, expected) {
-		t.Errorf("handler returned unexpected body: got %v did not contain '[%v]'",
-			rr.Body.String(), expected)
-	}
+	// if !contains(data, expected) {
+	// 	t.Errorf("handler returned unexpected body: got %v did not contain '[%v]'",
+	// 		rr.Body.String(), expected)
+	// }
 }

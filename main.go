@@ -9,9 +9,10 @@ import (
 )
 
 func UserHandler(c web.C, w http.ResponseWriter, r *http.Request) {
-	repos, err := GetRepos()
+	_, err := GetRepos()
 	if err != nil {
-		fmt.Fprintf(w, string(repos))
+		//fmt.Fprintf(w, string(repos))
+		fmt.Fprintf(w, "string(repos)")
 	}
 	fmt.Fprintf(w, "Failed to get data", 500)
 }
