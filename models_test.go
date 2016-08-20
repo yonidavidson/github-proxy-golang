@@ -18,7 +18,10 @@ func TestMapping(t *testing.T) {
 	var r Repos
 	f, _ := getDataFromLocal()
 	json.Unmarshal(f, &r)
-	m := r._map("name", "stargazers_count", "forks", "watchers", "forks_count", "stargazers_count", "watchers_count")
+
+	m := r._map(extractor,
+		[]string{"name", "stargazers_count", "forks",
+			"watchers", "forks_count", "stargazers_count", "watchers_count"})
 	for _, o := range m {
 		_, ok1 := o["name"]
 		_, ok2 := o["stargazers_count"]
@@ -38,7 +41,7 @@ func TestMappingNegative(t *testing.T) {
 	var r Repos
 	f, _ := getDataFromLocal()
 	json.Unmarshal(f, &r)
-	m := r._map("name", "THIS_IS_WRONG")
+	m := r._map(extractor, []string{"name", "THIS_IS_WRONG"})
 	for _, o := range m {
 		_, ok1 := o["name"]
 		_, ok2 := o["THIS_IS_WRONG"]

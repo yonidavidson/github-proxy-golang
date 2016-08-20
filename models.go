@@ -10,6 +10,19 @@ import (
 
 type Repo map[string]interface{}
 type Repos []Repo
+type ReposMapper func(Repo, interface{}) Repo
+
+var extractor ReposMapper = func(x Repo, data interface{}) Repo {
+	tokens := data.([]string)
+	p := make(Repo)
+	for _, t := range tokens {
+		_, ok := x[t]
+		if ok {
+			p[t] = x[t]
+		}
+	}
+	return p
+}
 
 func (r Repo) score() Repo {
 	//For simplicity i assume that all this fields exist in json (or I would need to check each assigment before)
@@ -20,17 +33,10 @@ func (r Repo) score() Repo {
 	return r
 }
 
-func (a Repos) _map(tokens ...string) Repos {
+func (a Repos) _map(m ReposMapper, d interface{}) Repos {
 	b := a[:0]
 	for _, x := range a {
-		p := make(Repo)
-		for _, t := range tokens {
-			_, ok := x[t]
-			if ok {
-				p[t] = x[t]
-			}
-		}
-		b = append(b, p)
+		b = append(b, m(x, d))
 	}
 	return b
 }
@@ -77,5 +83,5 @@ func getRepos(name string) (Repos, error) {
 		log.Println(err)
 		return nil, err
 	}
-	return r._map("name"), nil
+	return r._map(extractor, []string{"name"}), nil
 }
