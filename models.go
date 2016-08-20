@@ -83,5 +83,7 @@ func getRepos(name string) (Repos, error) {
 		log.Println(err)
 		return nil, err
 	}
-	return r._map(extractor, []string{"name"}), nil
+	s := r._map(scorer, nil)
+	m := s._map(extractor, []string{"name", "score"})
+	return m, nil
 }
