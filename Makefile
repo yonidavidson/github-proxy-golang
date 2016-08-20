@@ -1,6 +1,7 @@
 help:
 	@echo "\
 help     this message\n\
+shell    shell promt in container\n\
 setup    build all packages, run all tests\n\
 test     generate code-coverage report\n\
 run      setup local environment, and drop into shell\n\
@@ -24,3 +25,7 @@ teardown:
 	$(call pinfo,tearing down local env)
 	docker-compose kill
 	docker-compose rm -v
+
+shell:
+	$(call pinfo,entring shell promt)
+	docker-compose run --rm app  /bin/bash

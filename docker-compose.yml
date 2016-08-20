@@ -1,0 +1,5 @@
+app:
+ image: golang:1.6-wheezy
+ volumes:
+ - $PWD/app:/go/src/myapp
+ working_dir: /go/src/myapp
