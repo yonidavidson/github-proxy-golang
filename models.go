@@ -8,18 +8,28 @@ import (
 	"net/http"
 )
 
-type Repos []map[string]interface{}
+type Repo map[string]interface{}
+type Repos []Repo
+
+func (r Repo) score() Repo {
+	r["score"] = 0
+	return r
+}
 
 func (a Repos) _map(tokens ...string) Repos {
 	b := a[:0]
 	for _, x := range a {
-		p := make(map[string]interface{})
+		p := make(Repo)
 		for _, t := range tokens {
 			p[t] = x[t]
 		}
 		b = append(b, p)
 	}
 	return b
+}
+
+func (a Repos) score() int {
+	return 0
 }
 
 func getDataFromLocal() ([]byte, error) {
