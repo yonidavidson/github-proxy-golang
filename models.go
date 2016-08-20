@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"sort"
 )
 
 type Repo map[string]interface{}
@@ -91,5 +92,6 @@ func getRepos(name string) (Repos, error) {
 	}
 	s := r._map(scorer, nil)
 	m := s._map(extractor, []string{"name", "score"})
+	sort.Sort(ByScore(m))
 	return m, nil
 }
