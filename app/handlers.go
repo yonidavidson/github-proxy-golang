@@ -9,6 +9,9 @@ import (
 	"sort"
 )
 
+var REPO_ATTRIBUTES = []string{"name", "score", "created_at", "language",
+	"forks", "watchers", "open_issues_count"}
+
 func getUserData(name string) (Repos, error) {
 	var r Repos
 	var body []byte
@@ -28,7 +31,7 @@ func getUserData(name string) (Repos, error) {
 		return nil, err
 	}
 	s := r._map(scorer, nil)
-	m := s._map(extractor, []string{"name", "score"})
+	m := s._map(extractor, REPO_ATTRIBUTES)
 	sort.Sort(ByScore(m))
 	return m, nil
 }
