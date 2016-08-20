@@ -24,7 +24,10 @@ func (a Repos) _map(tokens ...string) Repos {
 	for _, x := range a {
 		p := make(Repo)
 		for _, t := range tokens {
-			p[t] = x[t]
+			_, ok := x[t]
+			if ok {
+				p[t] = x[t]
+			}
 		}
 		b = append(b, p)
 	}
