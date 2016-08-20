@@ -6,6 +6,8 @@ web:
  command: '/bin/bash -c "go get && go install && myapp"'
  ports:
   - "8000:8000"
+ environment:
+  - SECURITY_OPEN=${APP_SECURITY_OPEN}
 
 tester:
   extends:

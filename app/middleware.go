@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/base64"
 	"github.com/zenazn/goji/web"
+	"log"
 	"net/http"
 	"strings"
 )
@@ -11,16 +12,20 @@ const Password = "yoni:davidson"
 
 func SuperSecure(c *web.C, h http.Handler) http.Handler {
 	fn := func(w http.ResponseWriter, r *http.Request) {
-		auth := r.Header.Get("Authorization")
-		if !strings.HasPrefix(auth, "Basic ") {
-			pleaseAuth(w)
-			return
-		}
+		if SECURITY_OPEN != "TRUE" {
+			auth := r.Header.Get("Authorization")
+			if !strings.HasPrefix(auth, "Basic ") {
+				pleaseAuth(w)
+				return
+			}
 
-		password, err := base64.StdEncoding.DecodeString(auth[6:])
-		if err != nil || string(password) != Password {
-			pleaseAuth(w)
-			return
+			password, err := base64.StdEncoding.DecodeString(auth[6:])
+			if err != nil || string(password) != Password {
+				pleaseAuth(w)
+				return
+			}
+		} else {
+			log.Println("warning - security open")
 		}
 
 		h.ServeHTTP(w, r)
