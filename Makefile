@@ -2,9 +2,9 @@ help:
 	@echo "\
 help     this message\n\
 shell    shell promt in container\n\
-setup    build all packages, run all tests\n\
-test     generate code-coverage report\n\
-run      setup local environment, and drop into shell\n\
+setup    setup envrioment - not in use\n\
+test     run all tests\n\
+run      start app\n\
 teardown tearing down local env\n\
 "
 
