@@ -1,0 +1,13 @@
+web:
+ image: golang:1.6-wheezy
+ volumes:
+ - $PWD/app:/go/src/myapp
+ working_dir: /go/src/myapp
+ command: '/bin/bash -c "go get && go install && myapp"'
+ ports:
+  - "8000:8000"
+
+tester:
+  extends:
+    service: web
+  command: '/bin/bash -c "go get && go test"'
