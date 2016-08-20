@@ -8,6 +8,7 @@ web:
   - "8000:8000"
  environment:
   - SECURITY_OPEN=${APP_SECURITY_OPEN}
+  - MODE_DRY=${APP_MODE_DRY}
 
 tester:
   extends:

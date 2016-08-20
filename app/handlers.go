@@ -16,7 +16,8 @@ func getUserData(name string) (Repos, error) {
 	var r Repos
 	var body []byte
 	var err error
-	if MODE_DRY {
+	if MODE_DRY == "TRUE" {
+		log.Println("warning - dry mode, data from localhost")
 		body, err = getDataFromLocal()
 	} else {
 		body, err = getBody(name)
