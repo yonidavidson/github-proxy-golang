@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"sort"
 	"testing"
 )
 
@@ -95,7 +96,7 @@ func TestReposSorting(t *testing.T) {
 		Repo{"score": float64(5)},
 		Repo{"score": float64(7)},
 	}
-	// sort.Sort(ByScore(people))
+	sort.Sort(ByScore(r))
 	for i, v := range r {
 		if ro[i]["score"] != v["score"] {
 			t.Errorf("sorting failed,index:%v ,expcted: %v , got: %v", i, ro[i], r[i])

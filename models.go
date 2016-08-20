@@ -12,6 +12,12 @@ type Repo map[string]interface{}
 type Repos []Repo
 type ReposMapper func(Repo, interface{}) Repo
 
+type ByScore Repos
+
+func (a ByScore) Len() int           { return len(a) }
+func (a ByScore) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
+func (a ByScore) Less(i, j int) bool { return a[i]["score"].(float64) < a[j]["score"].(float64) }
+
 var extractor ReposMapper = func(x Repo, data interface{}) Repo {
 	tokens := data.([]string)
 	p := make(Repo)
