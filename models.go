@@ -12,6 +12,7 @@ type Repo map[string]interface{}
 type Repos []Repo
 
 func (r Repo) score() Repo {
+	//For simplicity i assume that all this fields exist in json (or I would need to check each assigment before)
 	forks := r["forks_count"].(int)
 	stargazers := r["stargazers_count"].(int)
 	watchers := r["watchers_count"].(int)
