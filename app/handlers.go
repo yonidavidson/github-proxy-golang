@@ -10,7 +10,7 @@ import (
 )
 
 var REPO_ATTRIBUTES = []string{"name", "score", "created_at", "language",
-	"forks", "watchers", "open_issues_count"}
+	"forks", "watchers", "open_issues_count", "stargazers_count"}
 
 func getUserData(name string) (Repos, error) {
 	var r Repos
