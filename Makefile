@@ -13,14 +13,17 @@ define pinfo
 endef
 
 setup:
-	$(call pinfo,setting up local env)
+	$(call pinfo,setting up local env - not used)
+	docker-compose build
 
 test:
 	$(call pinfo,testing)
+	docker-compose up tester
 
 run:
 	$(call pinfo,running)
-	
+	docker-compose up web
+
 teardown:
 	$(call pinfo,tearing down local env)
 	docker-compose kill
@@ -28,4 +31,4 @@ teardown:
 
 shell:
 	$(call pinfo,entring shell promt)
-	docker-compose run --rm app  /bin/bash
+	docker-compose run --rm tester  /bin/bash
