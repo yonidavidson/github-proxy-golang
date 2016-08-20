@@ -2,11 +2,8 @@ package main
 
 import (
 	"crypto/tls"
-	"encoding/json"
 	"io/ioutil"
-	"log"
 	"net/http"
-	"sort"
 )
 
 type Repo map[string]interface{}
@@ -58,9 +55,6 @@ func getDataFromLocal() ([]byte, error) {
 }
 
 func getBody(name string) ([]byte, error) {
-	if MODE_DRY {
-		return getDataFromLocal()
-	}
 	tr := &http.Transport{
 		TLSClientConfig:    &tls.Config{RootCAs: nil},
 		DisableCompression: false,
@@ -76,22 +70,4 @@ func getBody(name string) ([]byte, error) {
 		return nil, err
 	}
 	return body, nil
-}
-
-func getRepos(name string) (Repos, error) {
-	var r Repos
-	body, err := getBody(name)
-	if err != nil {
-		log.Println(err)
-		return nil, err
-	}
-	err = json.Unmarshal(body, &r)
-	if err != nil {
-		log.Println(err)
-		return nil, err
-	}
-	s := r._map(scorer, nil)
-	m := s._map(extractor, []string{"name", "score"})
-	sort.Sort(ByScore(m))
-	return m, nil
 }
