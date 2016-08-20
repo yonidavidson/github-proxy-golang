@@ -12,7 +12,10 @@ type Repo map[string]interface{}
 type Repos []Repo
 
 func (r Repo) score() Repo {
-	r["score"] = 0
+	forks := r["forks_count"].(int)
+	stargazers := r["stargazers_count"].(int)
+	watchers := r["watchers_count"].(int)
+	r["score"] = forks + 2*stargazers + watchers
 	return r
 }
 
