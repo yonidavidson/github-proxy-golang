@@ -24,11 +24,15 @@ var extractor ReposMapper = func(x Repo, data interface{}) Repo {
 	return p
 }
 
+var scorer ReposMapper = func(x Repo, data interface{}) Repo {
+	return x.score()
+}
+
 func (r Repo) score() Repo {
 	//For simplicity i assume that all this fields exist in json (or I would need to check each assigment before)
-	forks := r["forks_count"].(int)
-	stargazers := r["stargazers_count"].(int)
-	watchers := r["watchers_count"].(int)
+	forks := r["forks_count"].(float64)
+	stargazers := r["stargazers_count"].(float64)
+	watchers := r["watchers_count"].(float64)
 	r["score"] = forks + 2*stargazers + watchers
 	return r
 }
@@ -39,10 +43,6 @@ func (a Repos) _map(m ReposMapper, d interface{}) Repos {
 		b = append(b, m(x, d))
 	}
 	return b
-}
-
-func (a Repos) score() int {
-	return 0
 }
 
 func getDataFromLocal() ([]byte, error) {

@@ -52,16 +52,32 @@ func TestMappingNegative(t *testing.T) {
 	}
 }
 
-func TestScoring(t *testing.T) {
-	predicat := func(forks int, stargazers int, watchers int) int { return (forks + 2*stargazers + watchers) }
+func TestRepoScoring(t *testing.T) {
+	predicat := func(forks float64, stargazers float64, watchers float64) float64 {
+		return (forks + 2*stargazers + watchers)
+	}
 	case1 := Repo{
-		"forks_count":      1,
-		"stargazers_count": 1,
-		"watchers_count":   1,
+		"forks_count":      float64(1),
+		"stargazers_count": float64(1),
+		"watchers_count":   float64(1),
 	}
 	result := case1.score()
-	expected := predicat(case1["forks_count"].(int), case1["stargazers_count"].(int), case1["watchers_count"].(int))
+	expected := predicat(case1["forks_count"].(float64), case1["stargazers_count"].(float64), case1["watchers_count"].(float64))
 	if result["score"] != expected {
 		t.Errorf("scoring failed, expcted: %v , got: %v", expected, result["score"])
+	}
+}
+
+func TestReposScoring(t *testing.T) {
+	var r Repos
+	f, _ := getDataFromLocal()
+	json.Unmarshal(f, &r)
+	m := r._map(scorer, nil)
+	for _, o := range m {
+		expected := o.score()["score"]
+		score, _ := o["score"]
+		if expected != score {
+			t.Errorf("scoring failed, expcted: %v , got: %v", expected, score)
+		}
 	}
 }
