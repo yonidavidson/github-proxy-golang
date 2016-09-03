@@ -15,5 +15,6 @@ func main() {
 	goji.Get("/api/gh/:username", UserHandler)
 	goji.Use(middleware.EnvInit)
 	goji.Use(SuperSecure)
+	goji.Use(JsonText)
 	goji.Serve()
 }
