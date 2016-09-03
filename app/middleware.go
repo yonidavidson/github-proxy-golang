@@ -38,3 +38,11 @@ func pleaseAuth(w http.ResponseWriter) {
 	w.WriteHeader(http.StatusUnauthorized)
 	w.Write([]byte("Go away!\n"))
 }
+
+func JsonText(h http.Handler) http.Handler {
+	fn := func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
+		h.ServeHTTP(w, r)
+	}
+	return http.HandlerFunc(fn)
+}
